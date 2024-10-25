@@ -1,0 +1,49 @@
+<o-form-layout-manager attr="BoatMaintenanceAssignment" mode="tab" title="BOATMAINTENANCEASSIGNMENT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="BoatMaintenanceAssignmentTable" 
+            service="BoatMaintenanceAssignment" 
+            entity="BoatMaintenanceAssignment" 
+            title="BOATMAINTENANCEASSIGNMENT"
+            keys="id"
+            columns="id;maintenance_person_id;sailboat_id" 
+            header-actions="R;D"
+            visible-columns="id;maintenance_person_id;sailboat_id"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="maintenance_person_id" title="maintenance_person_id">
+    <o-table-cell-renderer-service attr="maintenance_person_id" 
+        service="MaintenancePerson" entity="MaintenancePersonType" columns="id;name"
+        parent-keys="id:maintenance_person_id"
+        value-column="name" keys="maintenance_person_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="sailboat_id" title="sailboat_id">
+    <o-table-cell-renderer-service attr="sailboat_id" 
+        service="Sailboat" entity="SailboatType" columns="id;id"
+        parent-keys="id:sailboat_id"
+        value-column="id" keys="sailboat_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

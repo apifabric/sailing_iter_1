@@ -1,0 +1,541 @@
+about:
+  date: October 25, 2024 17:37:42
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  BoatEquipment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: equipment_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: sailboat_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Links equipment to the sailboats they are associated with.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Links equipment to the sailboats they are associated with.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - equipment_id
+      name: equipment
+      resource: Equipment
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: BoatEquipment
+  BoatMaintenanceAssignment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: maintenance_person_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: sailboat_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Associates maintenance personnel with the specific sailboats they
+      maintain.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Associates maintenance personnel with the specific sailboats they maintain.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - maintenance_person_id
+      name: maintenance_person
+      resource: MaintenancePerson
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: BoatMaintenanceAssignment
+  CampAttendance:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: camper_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: instructor_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: price_list_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Links each junior camper to their instructor and chosen sailing package.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Links each junior camper to their instructor and chosen sailing package.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - camper_id
+      name: camper
+      resource: JuniorCamper
+    - direction: toone
+      fks:
+      - instructor_id
+      name: instructor
+      resource: Instructor
+    - direction: toone
+      fks:
+      - price_list_id
+      name: price_list
+      resource: CampPriceList
+    type: CampAttendance
+  CampPriceList:
+    columns:
+    - label: ' package_name*'
+      name: package_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: price
+      required: true
+      template: real
+      type: FLOAT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Displays the price list for camp attendance options or packages.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: package_name
+    home_template: home_template.html
+    info_list: Displays the price list for camp attendance options or packages.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - price_list_id
+      name: CampAttendanceList
+      resource: CampAttendance
+    type: CampPriceList
+  Equipment:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Lists the various equipment available for sailboat activities, linked
+      with boats.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Lists the various equipment available for sailboat activities, linked
+      with boats.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - equipment_id
+      name: BoatEquipmentList
+      resource: BoatEquipment
+    type: Equipment
+  Feedback:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: camper_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: comments
+      template: text
+      type: VARCHAR
+    description: Captures feedback from junior campers about their experience at camp.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Captures feedback from junior campers about their experience at camp.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - camper_id
+      name: camper
+      resource: JuniorCamper
+    type: Feedback
+  Instructor:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: contact_number
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Contains details of the instructors including names and contact information.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Contains details of the instructors including names and contact information.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - instructor_id
+      name: CampAttendanceList
+      resource: CampAttendance
+    - direction: tomany
+      fks:
+      - instructor_id
+      name: SailingEventList
+      resource: SailingEvent
+    type: Instructor
+  JuniorCamper:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: emergency_contact_name
+      required: true
+      template: text
+      type: VARCHAR
+    - name: emergency_contact_phone
+      required: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Lists the junior campers attending the camp along with their emergency
+      contact details.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Lists the junior campers attending the camp along with their emergency
+      contact details.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - camper_id
+      name: CampAttendanceList
+      resource: CampAttendance
+    - direction: tomany
+      fks:
+      - camper_id
+      name: FeedbackList
+      resource: Feedback
+    type: JuniorCamper
+  MaintenancePerson:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: skills
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Lists the personnel available for maintaining the sailboats, with
+      their skills.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Lists the personnel available for maintaining the sailboats, with their
+      skills.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - maintenance_person_id
+      name: BoatMaintenanceAssignmentList
+      resource: BoatMaintenanceAssignment
+    type: MaintenancePerson
+  RacingSchedule:
+    columns:
+    - label: ' event_name*'
+      name: event_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: sailboat_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: event_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Organizes regular contests with details about race events and participants.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: event_name
+    home_template: home_template.html
+    info_list: Organizes regular contests with details about race events and participants.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: RacingSchedule
+  Sailboat:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: model
+      required: true
+      template: text
+      type: VARCHAR
+    - name: size
+      required: true
+      template: real
+      type: FLOAT
+    description: Stores details of the sailboats available at the camp including their
+      model and size.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Stores details of the sailboats available at the camp including their
+      model and size.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: BoatEquipmentList
+      resource: BoatEquipment
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: BoatMaintenanceAssignmentList
+      resource: BoatMaintenanceAssignment
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: RacingScheduleList
+      resource: RacingSchedule
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: SailingEventList
+      resource: SailingEvent
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: ServiceScheduleList
+      resource: ServiceSchedule
+    type: Sailboat
+  SailingEvent:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: instructor_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: sailboat_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: event_date
+      required: true
+      template: date
+      type: DATETIME
+    description: Defines scheduled sailing events, mentioning the sailboat used and
+      the lead instructor.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Defines scheduled sailing events, mentioning the sailboat used and
+      the lead instructor.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - instructor_id
+      name: instructor
+      resource: Instructor
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: SailingEvent
+  ServiceSchedule:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: sailboat_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: last_service_date
+      required: true
+      template: date
+      type: DATETIME
+    description: Contains the service schedule for each sailboat, including the last
+      service date.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Contains the service schedule for each sailboat, including the last
+      service date.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: ServiceSchedule
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

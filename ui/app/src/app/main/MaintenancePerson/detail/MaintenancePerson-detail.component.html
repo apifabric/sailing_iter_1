@@ -1,0 +1,85 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="MaintenancePerson_form_edit" 
+        service="MaintenancePerson" 
+        entity="MaintenancePerson" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #skills attr="skills" label="skills" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="BOATMAINTENANCEASSIGNMENT-maintenance_person_id">
+    <div layout-padding>
+      <o-table 
+        attr="BoatMaintenanceAssignmentTable" 
+        service="BoatMaintenanceAssignment" 
+        entity="BoatMaintenanceAssignment" 
+        keys="id"
+        parent-keys="maintenance_person_id:id"
+        columns="id;maintenance_person_id;sailboat_id"  
+        horizontal-scroll="yes"
+        detail-form-route="BoatMaintenanceAssignment" 
+        edit-form-route="BoatMaintenanceAssignment"
+        visible-columns="id;maintenance_person_id;sailboat_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="maintenance_person_id" title="maintenance_person_id">
+    <o-table-cell-renderer-service attr="maintenance_person_id" 
+        service="MaintenancePerson" entity="MaintenancePersonType" columns="id;name"
+        parent-keys="id:maintenance_person_id"
+        value-column="name" keys="maintenance_person_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="sailboat_id" title="sailboat_id">
+    <o-table-cell-renderer-service attr="sailboat_id" 
+        service="Sailboat" entity="SailboatType" columns="id;id"
+        parent-keys="id:sailboat_id"
+        value-column="id" keys="sailboat_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

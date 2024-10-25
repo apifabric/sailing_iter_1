@@ -1,0 +1,372 @@
+about:
+  date: October 25, 2024 17:37:42
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 12
+  number_tables: 13
+info_toggle_checked: true
+resources:
+  BoatEquipment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: equipment_id
+      required: true
+    - name: sailboat_id
+      required: true
+    description: Links equipment to the sailboats they are associated with.
+    info_list: Links equipment to the sailboats they are associated with.
+    tab_groups:
+    - direction: toone
+      fks:
+      - equipment_id
+      name: equipment
+      resource: Equipment
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: BoatEquipment
+    user_key: id
+  BoatMaintenanceAssignment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: maintenance_person_id
+      required: true
+    - name: sailboat_id
+      required: true
+    description: Associates maintenance personnel with the specific sailboats they
+      maintain.
+    info_list: Associates maintenance personnel with the specific sailboats they maintain.
+    tab_groups:
+    - direction: toone
+      fks:
+      - maintenance_person_id
+      name: maintenance_person
+      resource: MaintenancePerson
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: BoatMaintenanceAssignment
+    user_key: id
+  CampAttendance:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: camper_id
+      required: true
+    - name: instructor_id
+      required: true
+    - name: price_list_id
+      required: true
+    description: Links each junior camper to their instructor and chosen sailing package.
+    info_list: Links each junior camper to their instructor and chosen sailing package.
+    tab_groups:
+    - direction: toone
+      fks:
+      - camper_id
+      name: camper
+      resource: JuniorCamper
+    - direction: toone
+      fks:
+      - instructor_id
+      name: instructor
+      resource: Instructor
+    - direction: toone
+      fks:
+      - price_list_id
+      name: price_list
+      resource: CampPriceList
+    type: CampAttendance
+    user_key: id
+  CampPriceList:
+    attributes:
+    - label: ' package_name*'
+      name: package_name
+      required: true
+      search: true
+      sort: true
+    - name: price
+      required: true
+    - name: id
+    description: Displays the price list for camp attendance options or packages.
+    info_list: Displays the price list for camp attendance options or packages.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - price_list_id
+      name: CampAttendanceList
+      resource: CampAttendance
+    type: CampPriceList
+    user_key: package_name
+  Equipment:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Lists the various equipment available for sailboat activities, linked
+      with boats.
+    info_list: Lists the various equipment available for sailboat activities, linked
+      with boats.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - equipment_id
+      name: BoatEquipmentList
+      resource: BoatEquipment
+    type: Equipment
+    user_key: name
+  Feedback:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: camper_id
+      required: true
+    - name: comments
+    description: Captures feedback from junior campers about their experience at camp.
+    info_list: Captures feedback from junior campers about their experience at camp.
+    tab_groups:
+    - direction: toone
+      fks:
+      - camper_id
+      name: camper
+      resource: JuniorCamper
+    type: Feedback
+    user_key: id
+  Instructor:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: contact_number
+    - name: id
+    description: Contains details of the instructors including names and contact information.
+    info_list: Contains details of the instructors including names and contact information.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - instructor_id
+      name: CampAttendanceList
+      resource: CampAttendance
+    - direction: tomany
+      fks:
+      - instructor_id
+      name: SailingEventList
+      resource: SailingEvent
+    type: Instructor
+    user_key: name
+  JuniorCamper:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: emergency_contact_name
+      required: true
+    - name: emergency_contact_phone
+      required: true
+    - name: id
+    description: Lists the junior campers attending the camp along with their emergency
+      contact details.
+    info_list: Lists the junior campers attending the camp along with their emergency
+      contact details.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - camper_id
+      name: CampAttendanceList
+      resource: CampAttendance
+    - direction: tomany
+      fks:
+      - camper_id
+      name: FeedbackList
+      resource: Feedback
+    type: JuniorCamper
+    user_key: name
+  MaintenancePerson:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: skills
+    - name: id
+    description: Lists the personnel available for maintaining the sailboats, with
+      their skills.
+    info_list: Lists the personnel available for maintaining the sailboats, with their
+      skills.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - maintenance_person_id
+      name: BoatMaintenanceAssignmentList
+      resource: BoatMaintenanceAssignment
+    type: MaintenancePerson
+    user_key: name
+  RacingSchedule:
+    attributes:
+    - label: ' event_name*'
+      name: event_name
+      required: true
+      search: true
+      sort: true
+    - name: sailboat_id
+      required: true
+    - name: event_date
+      required: true
+    - name: id
+    description: Organizes regular contests with details about race events and participants.
+    info_list: Organizes regular contests with details about race events and participants.
+    tab_groups:
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: RacingSchedule
+    user_key: event_name
+  Sailboat:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: model
+      required: true
+    - name: size
+      required: true
+    description: Stores details of the sailboats available at the camp including their
+      model and size.
+    info_list: Stores details of the sailboats available at the camp including their
+      model and size.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: BoatEquipmentList
+      resource: BoatEquipment
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: BoatMaintenanceAssignmentList
+      resource: BoatMaintenanceAssignment
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: RacingScheduleList
+      resource: RacingSchedule
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: SailingEventList
+      resource: SailingEvent
+    - direction: tomany
+      fks:
+      - sailboat_id
+      name: ServiceScheduleList
+      resource: ServiceSchedule
+    type: Sailboat
+    user_key: id
+  SailingEvent:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: instructor_id
+      required: true
+    - name: sailboat_id
+      required: true
+    - name: event_date
+      required: true
+    description: Defines scheduled sailing events, mentioning the sailboat used and
+      the lead instructor.
+    info_list: Defines scheduled sailing events, mentioning the sailboat used and
+      the lead instructor.
+    tab_groups:
+    - direction: toone
+      fks:
+      - instructor_id
+      name: instructor
+      resource: Instructor
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: SailingEvent
+    user_key: id
+  ServiceSchedule:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: sailboat_id
+      required: true
+    - name: last_service_date
+      required: true
+    description: Contains the service schedule for each sailboat, including the last
+      service date.
+    info_list: Contains the service schedule for each sailboat, including the last
+      service date.
+    tab_groups:
+    - direction: toone
+      fks:
+      - sailboat_id
+      name: sailboat
+      resource: Sailboat
+    type: ServiceSchedule
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

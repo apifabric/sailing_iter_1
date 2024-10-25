@@ -1,0 +1,58 @@
+<o-form-layout-manager attr="CampAttendance" mode="tab" title="CAMPATTENDANCE">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="CampAttendanceTable" 
+            service="CampAttendance" 
+            entity="CampAttendance" 
+            title="CAMPATTENDANCE"
+            keys="id"
+            columns="id;camper_id;instructor_id;price_list_id" 
+            header-actions="R;D"
+            visible-columns="id;camper_id;instructor_id;price_list_id"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="camper_id" title="camper_id">
+    <o-table-cell-renderer-service attr="camper_id" 
+        service="JuniorCamper" entity="JuniorCamperType" columns="id;name"
+        parent-keys="id:camper_id"
+        value-column="name" keys="camper_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="instructor_id" title="instructor_id">
+    <o-table-cell-renderer-service attr="instructor_id" 
+        service="Instructor" entity="InstructorType" columns="id;name"
+        parent-keys="id:instructor_id"
+        value-column="name" keys="instructor_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="price_list_id" title="price_list_id">
+    <o-table-cell-renderer-service attr="price_list_id" 
+        service="CampPriceList" entity="CampPriceListType" columns="id;package_name"
+        parent-keys="id:price_list_id"
+        value-column="package_name" keys="price_list_id"
+        visible-columns="package_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

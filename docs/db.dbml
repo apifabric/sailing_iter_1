@@ -1,0 +1,99 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table BoatEquipment {
+    id INTEGER [primary key]
+    sailboat_id INTEGER 
+    equipment_id INTEGER 
+    }
+
+Table Equipment {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table Sailboat {
+    id INTEGER [primary key]
+    model VARCHAR 
+    size FLOAT 
+    }
+
+Table BoatMaintenanceAssignment {
+    id INTEGER [primary key]
+    sailboat_id INTEGER 
+    maintenance_person_id INTEGER 
+    }
+
+Table MaintenancePerson {
+    id INTEGER [primary key]
+    name VARCHAR 
+    skills VARCHAR 
+    }
+
+Table CampAttendance {
+    id INTEGER [primary key]
+    camper_id INTEGER 
+    instructor_id INTEGER 
+    price_list_id INTEGER 
+    }
+
+Table JuniorCamper {
+    id INTEGER [primary key]
+    name VARCHAR 
+    emergency_contact_name VARCHAR 
+    emergency_contact_phone VARCHAR 
+    }
+
+Table Instructor {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_number VARCHAR 
+    }
+
+Table CampPriceList {
+    id INTEGER [primary key]
+    package_name VARCHAR 
+    price FLOAT 
+    }
+
+Table Feedback {
+    id INTEGER [primary key]
+    camper_id INTEGER 
+    comments VARCHAR 
+    }
+
+Table RacingSchedule {
+    id INTEGER [primary key]
+    event_name VARCHAR 
+    event_date DATETIME 
+    sailboat_id INTEGER 
+    }
+
+Table SailingEvent {
+    id INTEGER [primary key]
+    sailboat_id INTEGER 
+    instructor_id INTEGER 
+    event_date DATETIME 
+    }
+
+Table ServiceSchedule {
+    id INTEGER [primary key]
+    sailboat_id INTEGER 
+    last_service_date DATETIME 
+    }
+
+
+
+// Relationships
+    Ref: BoatEquipment.(equipment_id) < Equipment.(id)
+    Ref: BoatEquipment.(sailboat_id) < Sailboat.(id)
+    Ref: BoatMaintenanceAssignment.(maintenance_person_id) < MaintenancePerson.(id)
+    Ref: BoatMaintenanceAssignment.(sailboat_id) < Sailboat.(id)
+    Ref: CampAttendance.(camper_id) < JuniorCamper.(id)
+    Ref: CampAttendance.(instructor_id) < Instructor.(id)
+    Ref: CampAttendance.(price_list_id) < CampPriceList.(id)
+    Ref: Feedback.(camper_id) < JuniorCamper.(id)
+    Ref: RacingSchedule.(sailboat_id) < Sailboat.(id)
+    Ref: SailingEvent.(instructor_id) < Instructor.(id)
+    Ref: SailingEvent.(sailboat_id) < Sailboat.(id)
+    Ref: ServiceSchedule.(sailboat_id) < Sailboat.(id)
